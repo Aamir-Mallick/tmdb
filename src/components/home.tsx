@@ -12,7 +12,7 @@ import Movies from './movies';
 import {useFetchMovies} from './hooks';
 import {TOptions} from '../services/api';
 
-const filterOptions = ['nowPlaying', 'popular', 'topRated', 'upComing'];
+const filterOptions = ['now Playing', 'popular', 'top Rated', 'up Coming'];
 
 const Home = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -93,6 +93,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     marginRight: 15,
     borderRadius: 12,
+    height: 40,
+    marginBottom: 10,
   },
   fontStyle: {
     color: '#36303f',

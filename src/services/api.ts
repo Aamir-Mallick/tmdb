@@ -4,21 +4,21 @@ import topRated from './mockData/topRated';
 import upComing from './mockData/upComing';
 
 const status = 200;
-export type TOptions = 'nowPlaying' | 'popular' | 'topRated' | 'upComing';
+export type TOptions = 'now Playing' | 'popular' | 'top Rated' | 'up Coming';
 
 export const fetchMoviesApi = async (type: TOptions) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      if (type === 'nowPlaying') {
+      if (type === 'now Playing') {
         resolve(nowPlaying.results);
       }
       if (type === 'popular') {
         resolve(popular.results);
       }
-      if (type === 'topRated') {
+      if (type === 'top Rated') {
         resolve(topRated.results);
       }
-      if (type === 'upComing') {
+      if (type === 'up Coming') {
         resolve(upComing.results);
       }
     }, 500);
