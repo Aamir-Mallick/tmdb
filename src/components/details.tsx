@@ -26,10 +26,6 @@ const DetailsPage = () => {
         <Text variant="bodyMedium">Rating: {averageRating}</Text>
         <Text variant="bodyMedium">description: {description}</Text>
       </Card.Content>
-      {/* <Avatar.Image
-      size={24}
-      source={{uri: `https://image.tmdb.org/t/p/w500${poster}`}}
-    /> */}
     </Card>
   );
 };
