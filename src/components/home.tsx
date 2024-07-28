@@ -10,11 +10,11 @@ import {
 import {fetchMoviesApi} from '../services/api';
 import Movies from './movies/movies';
 
-const filter = ['nowPlaying', 'popular', 'topRated', 'upComing'];
+const filterOptions = ['nowPlaying', 'popular', 'topRated', 'upComing'];
 
 const Home = () => {
-  const ref = useRef<FlatList>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+
   const [movie, setMovies] = useState({
     data: [],
     isPending: false,
@@ -26,7 +26,7 @@ const Home = () => {
   };
 
   useEffect(() => {
-    fetchMoviesApi('nowPlaying')
+    fetchMoviesApi(filterOptions[currentIndex])
       .then(data => {
         console.log('data', data);
         setMovies({
@@ -42,13 +42,12 @@ const Home = () => {
           errorMessage: error.message,
         });
       });
-  }, []);
+  }, [currentIndex]);
 
   return (
     <View>
       <FlatList
-        ref={ref}
-        data={filter}
+        data={filterOptions}
         horizontal
         showsHorizontalScrollIndicator={false}
         renderItem={({item, index}) => {
