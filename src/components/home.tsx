@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useState} from 'react';
 import {
   Text,
   View,
@@ -7,42 +7,25 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import {fetchMoviesApi} from '../services/api';
 import Movies from './movies/movies';
+import {useFetchMovies} from './hooks';
+import {TOptions} from '../services/api';
 
 const filterOptions = ['nowPlaying', 'popular', 'topRated', 'upComing'];
 
 const Home = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-
-  const [movie, setMovies] = useState({
-    data: [],
-    isPending: false,
-    errorMessage: '',
-  });
+  const {
+    data: movies,
+    isLoading,
+    error,
+    fetchData,
+  } = useFetchMovies(filterOptions[0] as TOptions);
 
   const handlePress = (index: React.SetStateAction<number>) => {
     setCurrentIndex(index);
+    fetchData(filterOptions[index]);
   };
-
-  useEffect(() => {
-    fetchMoviesApi(filterOptions[currentIndex])
-      .then(data => {
-        console.log('data', data);
-        setMovies({
-          data: data,
-          isPending: false,
-          errorMessage: '',
-        });
-      })
-      .catch(error => {
-        setMovies({
-          data: [],
-          isPending: false,
-          errorMessage: error.message,
-        });
-      });
-  }, [currentIndex]);
 
   return (
     <View>
@@ -66,7 +49,7 @@ const Home = () => {
         }}
       />
       <ScrollView>
-        {movie?.data.map(
+        {movies?.map(
           ({id, title, release_date, poster_path, vote_average, overview}) => {
             return (
               <Movies
