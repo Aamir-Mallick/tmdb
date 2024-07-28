@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useState} from 'react';
 import {
   Text,
   View,
@@ -7,48 +7,31 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import {fetchMoviesApi} from '../services/api';
-import Movies from './movies/movies';
+import {ActivityIndicator, MD2Colors} from 'react-native-paper';
+import Movies from './movies';
+import {useFetchMovies} from './hooks';
+import {TOptions} from '../services/api';
 
-const filter = ['nowPlaying', 'popular', 'topRated', 'upComing'];
+const filterOptions = ['now Playing', 'popular', 'top Rated', 'up Coming'];
 
 const Home = () => {
-  const ref = useRef<FlatList>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [movie, setMovies] = useState({
-    data: [],
-    isPending: false,
-    errorMessage: '',
-  });
+  const {
+    data: movies,
+    isLoading,
+    error,
+    fetchData,
+  } = useFetchMovies(filterOptions[0] as TOptions);
 
   const handlePress = (index: React.SetStateAction<number>) => {
     setCurrentIndex(index);
+    fetchData(filterOptions[index]);
   };
-
-  useEffect(() => {
-    fetchMoviesApi('nowPlaying')
-      .then(data => {
-        console.log('data', data);
-        setMovies({
-          data: data,
-          isPending: false,
-          errorMessage: '',
-        });
-      })
-      .catch(error => {
-        setMovies({
-          data: [],
-          isPending: false,
-          errorMessage: error.message,
-        });
-      });
-  }, []);
 
   return (
     <View>
       <FlatList
-        ref={ref}
-        data={filter}
+        data={filterOptions}
         horizontal
         showsHorizontalScrollIndicator={false}
         renderItem={({item, index}) => {
@@ -67,20 +50,35 @@ const Home = () => {
         }}
       />
       <ScrollView>
-        {movie?.data.map(
-          ({id, title, release_date, poster_path, vote_average, overview}) => {
-            return (
-              <Movies
-                key={id}
-                id={id}
-                title={title}
-                releaseDate={release_date}
-                poster={poster_path}
-                averageRating={vote_average}
-                description={overview}
-              />
-            );
-          },
+        {isLoading ? (
+          <ActivityIndicator
+            size="large"
+            animating={true}
+            color={MD2Colors.red800}
+          />
+        ) : (
+          movies?.map(
+            ({
+              id,
+              title,
+              release_date,
+              poster_path,
+              vote_average,
+              overview,
+            }) => {
+              return (
+                <Movies
+                  key={id}
+                  id={id}
+                  title={title}
+                  releaseDate={release_date}
+                  poster={poster_path}
+                  averageRating={vote_average}
+                  description={overview}
+                />
+              );
+            },
+          )
         )}
       </ScrollView>
     </View>
@@ -95,6 +93,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     marginRight: 15,
     borderRadius: 12,
+    height: 40,
+    marginBottom: 10,
   },
   fontStyle: {
     color: '#36303f',

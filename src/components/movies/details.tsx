@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {View, Image} from 'react-native';
-import {Avatar, Button, Card, Text} from 'react-native-paper';
+import {Card, Text} from 'react-native-paper';
 import {useRoute} from '@react-navigation/native';
+import {Image} from 'react-native';
 
 const DetailsPage = () => {
   const route = useRoute();
@@ -10,9 +10,14 @@ const DetailsPage = () => {
 
   return (
     <Card>
-      <Card.Cover
+      <Image
+        style={{
+          width: '100%',
+          height: 300,
+        }}
+        alt="img"
         source={{
-          uri: 'https://image.tmdb.org/t/p/w500/wwemzKWzjKYJFfCeiB57q3r4Bcm.png',
+          uri: `https://image.tmdb.org/t/p/w500${poster}`,
         }}
       />
       <Card.Content>
@@ -21,20 +26,6 @@ const DetailsPage = () => {
         <Text variant="bodyMedium">Rating: {averageRating}</Text>
         <Text variant="bodyMedium">description: {description}</Text>
       </Card.Content>
-      {/* <Avatar.Image
-      size={24}
-      source={{uri: `https://image.tmdb.org/t/p/w500${poster}`}}
-    /> */}
-      {/* <Image
-        style={{
-          width: 100,
-          height: 100,
-        }}
-        alt="img"
-        source={{
-          uri: `https://image.tmdb.org/t/p/w500/nP6RliHjxsz4irTKsxe8FRhKZYl.jpg`,
-        }}
-      /> */}
     </Card>
   );
 };
