@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Avatar, Button, Card, Text} from 'react-native-paper';
+import {Card, Text} from 'react-native-paper';
 import {Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
@@ -35,8 +35,8 @@ const Movies = (props: MoviesProps) => {
       </Card.Content>
       <Image
         style={{
-          width: 100,
-          height: 100,
+          width: '100%',
+          height: 200,
         }}
         alt="img"
         source={{

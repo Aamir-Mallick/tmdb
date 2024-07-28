@@ -4,7 +4,7 @@ import topRated from './mockData/topRated';
 import upComing from './mockData/upComing';
 
 const status = 200;
-type TOptions = 'nowPlaying' | 'popular' | 'topRated' | 'upComing';
+export type TOptions = 'nowPlaying' | 'popular' | 'topRated' | 'upComing';
 
 export const fetchMoviesApi = async (type: TOptions) => {
   return new Promise((resolve, reject) => {
