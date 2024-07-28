@@ -38,7 +38,7 @@ const Movies = (props: MoviesProps) => {
           width: '100%',
           height: 200,
         }}
-        alt="img"
+        alt="movie-img"
         source={{
           uri: `https://image.tmdb.org/t/p/w500${poster}`,
         }}

@@ -21,7 +21,7 @@ export const fetchMoviesApi = async (type: TOptions) => {
       if (type === 'upComing') {
         resolve(upComing.results);
       }
-    }, 200);
+    }, 500);
     if (status !== 200) {
       reject({errorCode: 501, message: 'somthing went wrong'});
     }

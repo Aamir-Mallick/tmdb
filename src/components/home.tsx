@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import {ActivityIndicator, MD2Colors} from 'react-native-paper';
-import Movies from './movies/movies';
+import Movies from './movies';
 import {useFetchMovies} from './hooks';
 import {TOptions} from '../services/api';
 
